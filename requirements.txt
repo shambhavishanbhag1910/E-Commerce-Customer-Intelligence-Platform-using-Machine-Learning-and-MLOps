@@ -10,3 +10,4 @@ mlflow
 pydantic
 pytest
 httpx
+evidently
