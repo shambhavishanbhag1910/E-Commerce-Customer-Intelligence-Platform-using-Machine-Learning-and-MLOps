@@ -84,10 +84,25 @@ def main():
     )
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    result.save_html(REPORT_PATH)
 
-    print(f"Data drift report saved at: {REPORT_PATH}")
+    print(f"Trying to save report at: {REPORT_PATH}")
 
+    # Method 1
+    try:
+        result.save_html(str(REPORT_PATH))
+        print("Tried saving using result.save_html()")
+    except Exception as e:
+        print("result.save_html() failed:", e)
 
-if __name__ == "__main__":
-    main()
+    # Method 2
+    if not REPORT_PATH.exists():
+        try:
+            report.save_html(str(REPORT_PATH))
+            print("Tried saving using report.save_html()")
+        except Exception as e:
+            print("report.save_html() failed:", e)
+
+    if REPORT_PATH.exists():
+        print(f"Data drift report saved successfully at: {REPORT_PATH}")
+    else:
+        raise FileNotFoundError(f"Report was not created at: {REPORT_PATH}")
