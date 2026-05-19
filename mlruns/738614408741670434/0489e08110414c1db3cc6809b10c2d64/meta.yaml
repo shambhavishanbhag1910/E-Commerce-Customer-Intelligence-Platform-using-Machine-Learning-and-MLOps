@@ -1,0 +1,14 @@
+artifact_uri: file:///workspaces/E-Commerce-Customer-Intelligence-Platform-using-Machine-Learning-and-MLOps/mlruns/738614408741670434/0489e08110414c1db3cc6809b10c2d64/artifacts
+end_time: 1779185231506
+entry_point_name: ''
+experiment_id: '738614408741670434'
+lifecycle_stage: active
+run_id: 0489e08110414c1db3cc6809b10c2d64
+run_name: logistic_regression_baseline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779185218597
+status: 3
+tags: []
+user_id: codespace

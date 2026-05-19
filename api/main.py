@@ -56,6 +56,9 @@ def predict_delay(order: OrderInput):
 
     return {
         "prediction": int(prediction),
-        "delay_probability": round(float(probability), 4),
-        "prediction_label": "Delayed" if prediction == 1 else "On Time"
+        "raw_delay_probability": float(probability),
+        "delay_probability": round(float(probability), 6),
+        "delay_probability_percent": round(float(probability) * 100, 4),
+        "prediction_label": "Delayed" if prediction == 1 else "On Time",
+        "input_received": order.model_dump()
     }

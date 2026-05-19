@@ -2,6 +2,8 @@ from pathlib import Path
 import joblib
 import pandas as pd
 import numpy as np
+import mlflow
+import mlflow.sklearn
 
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.compose import ColumnTransformer
@@ -22,9 +24,13 @@ from sklearn.metrics import (
 # Project root
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-DATA_PATH = PROJECT_ROOT / "data"/"Dataset by Olist.csv"  
+DATA_PATH = PROJECT_ROOT / "data" / "Dataset by Olist.csv"
 MODEL_DIR = PROJECT_ROOT / "models"
 MODEL_PATH = MODEL_DIR / "delivery_delay_model.pkl"
+
+MLFLOW_DB_PATH = PROJECT_ROOT / "mlflow.db"
+MLFLOW_TRACKING_URI = f"sqlite:///{MLFLOW_DB_PATH.as_posix()}"
+EXPERIMENT_NAME = "delivery-delay-prediction"
 
 
 def load_data(path):
@@ -145,14 +151,41 @@ def train_model(df):
     y_pred = model.predict(X_test)
     y_prob = model.predict_proba(X_test)[:, 1]
 
+    roc_auc = roc_auc_score(y_test, y_prob)
+    pr_auc = average_precision_score(y_test, y_prob)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred))
 
-    print("ROC-AUC:", round(roc_auc_score(y_test, y_prob), 4))
-    print("PR-AUC:", round(average_precision_score(y_test, y_prob), 4))
-    print("Precision:", round(precision_score(y_test, y_pred), 4))
-    print("Recall:", round(recall_score(y_test, y_pred), 4))
-    print("F1 Score:", round(f1_score(y_test, y_pred), 4))
+    print("ROC-AUC:", round(roc_auc, 4))
+    print("PR-AUC:", round(pr_auc, 4))
+    print("Precision:", round(precision, 4))
+    print("Recall:", round(recall, 4))
+    print("F1 Score:", round(f1, 4))
+
+    # MLflow tracking
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    mlflow.set_experiment(EXPERIMENT_NAME)
+
+    with mlflow.start_run(run_name="logistic_regression_baseline"):
+        mlflow.log_param("model_type", "LogisticRegression")
+        mlflow.log_param("max_iter", 1000)
+        mlflow.log_param("class_weight", "balanced")
+        mlflow.log_param("test_size", 0.2)
+        mlflow.log_param("split_strategy", "GroupShuffleSplit")
+        mlflow.log_param("target", "delivery_delay_flag")
+        mlflow.log_param("features", ",".join(features))
+
+        mlflow.log_metric("roc_auc", roc_auc)
+        mlflow.log_metric("pr_auc", pr_auc)
+        mlflow.log_metric("precision", precision)
+        mlflow.log_metric("recall", recall)
+        mlflow.log_metric("f1_score", f1)
+
+        mlflow.sklearn.log_model(model, "model")
 
     return model
 
