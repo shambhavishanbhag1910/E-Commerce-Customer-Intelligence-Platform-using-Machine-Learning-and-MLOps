@@ -1,19 +1,27 @@
-# E-Commerce-Customer-Intelligence-Platform-using-Machine-Learning-and-MLOps
+## Problem Statement:
 
-## Phase 1: Must complete
-1. Data cleaning
-2. EDA
-3. Classification model for bad review prediction
-4. Regression model for delivery days prediction
-5. Customer clustering
-6. MLflow tracking
-7. FastAPI prediction endpoint
-8. Docker container
-9. GitHub Actions basic CI
-## Phase 2: Advanced add-ons
-1. NLP sentiment model
-2. LSTM or BERT for review classification
-3. Time series forecasting
-4. Evidently AI monitoring
-5. DVC data versioning
-6. Airflow or Prefect pipeline
+The objective of this project is to predict whether an e-commerce order will be delivered late based on customer, product, payment, freight, and order information.
+
+Target Variable:
+delivery_delay_flag
+
+ML Type:
+Supervised Machine Learning - Binary Classification
+
+Models Used:
+Logistic Regression
+Random Forest
+
+Evaluation Metrics:
+Precision
+Recall
+F1-score
+ROC-AUC
+Confusion Matrix
+
+MLOps Practices:
+Reusable pipeline
+Data preprocessing pipeline
+Model serialization
+Train-test split
+Model evaluation report
