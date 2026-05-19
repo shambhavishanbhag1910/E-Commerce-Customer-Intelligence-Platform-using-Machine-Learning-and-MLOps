@@ -9,3 +9,4 @@ uvicorn
 mlflow
 pydantic
 pytest
+httpx
