@@ -10,4 +10,4 @@ mlflow
 pydantic
 pytest
 httpx
-evidently
+evidently==0.4.39

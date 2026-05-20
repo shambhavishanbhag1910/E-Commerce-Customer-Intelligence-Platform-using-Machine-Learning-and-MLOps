@@ -1,8 +1,8 @@
 from pathlib import Path
 import pandas as pd
 
-from evidently import Report
-from evidently.presets import DataDriftPreset
+from evidently.report import Report
+from evidently.metric_preset import DataDriftPreset
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -74,35 +74,23 @@ def main():
     reference_data = df.sample(frac=0.5, random_state=42)
     current_data = df.drop(reference_data.index)
 
-    report = Report([
+    report = Report(metrics=[
         DataDriftPreset()
     ])
 
-    result = report.run(
+    report.run(
         reference_data=reference_data,
         current_data=current_data
     )
 
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-    print(f"Trying to save report at: {REPORT_PATH}")
-
-    # Method 1
-    try:
-        result.save_html(str(REPORT_PATH))
-        print("Tried saving using result.save_html()")
-    except Exception as e:
-        print("result.save_html() failed:", e)
-
-    # Method 2
-    if not REPORT_PATH.exists():
-        try:
-            report.save_html(str(REPORT_PATH))
-            print("Tried saving using report.save_html()")
-        except Exception as e:
-            print("report.save_html() failed:", e)
+    report.save_html(str(REPORT_PATH))
 
     if REPORT_PATH.exists():
         print(f"Data drift report saved successfully at: {REPORT_PATH}")
     else:
         raise FileNotFoundError(f"Report was not created at: {REPORT_PATH}")
+
+
+if __name__ == "__main__":
+    main()
