@@ -1,51 +1,46 @@
-## Problem Statement:
+# E-Commerce Customer Intelligence Platform using Machine Learning and MLOps
 
-The objective of this project is to predict whether an e-commerce order will be delivered late based on customer, product, payment, freight, and order information.
+## Project Overview
 
-Target Variable:
+This project is an end-to-end Machine Learning and MLOps platform built on an e-commerce dataset. The objective is to predict whether an order is likely to be delivered late using customer, product, payment, freight, and order-level features.
+
+The project follows a complete ML lifecycle:
+
+- Data preparation
+- Feature engineering
+- Model training
+- Model evaluation
+- Visualization
+- Experiment tracking with MLflow
+- API serving using FastAPI
+- Docker containerization
+- Automated testing using Pytest
+- CI pipeline using GitHub Actions
+- Data drift monitoring using Evidently AI
+
+---
+
+## Business Problem
+
+Late delivery directly affects customer satisfaction, review scores, repeat purchase behavior, and operational efficiency.
+
+The goal of this project is to predict delivery delay risk before actual delivery, so that an e-commerce business can take early action.
+
+Example actions:
+
+- Prioritize high-risk orders
+- Alert logistics teams
+- Improve delivery planning
+- Reduce negative customer experience
+- Monitor operational drift over time
+
+---
+
+## Machine Learning Problem
+
+This is a supervised binary classification problem.
+
+### Target Variable
+
+```text
 delivery_delay_flag
-
-ML Type:
-Supervised Machine Learning - Binary Classification
-
-Models Used:
-Logistic Regression
-Random Forest
-
-Evaluation Metrics:
-Precision
-Recall
-F1-score
-ROC-AUC
-Confusion Matrix
-
-MLOps Practices:
-Reusable pipeline
-Data preprocessing pipeline
-Model serialization
-Train-test split
-Model evaluation report
-
-## Model Monitoring with Evidently AI
-
-This project includes model monitoring using Evidently AI to detect data drift between reference and current datasets.
-
-The monitoring script compares feature distributions for key order-level variables such as:
-
-- customer_state
-- product_category_name
-- payment_type
-- payment_value
-- freight_value
-- price
-- product_weight_g
-- product_volume
-- purchase_dayofweek
-- purchase_month
-- purchase_year
-- estimated_delivery_days
-
-To generate the data drift report:
-
-```bash
-python monitoring/data_drift_report.py
