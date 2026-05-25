@@ -1,0 +1,37 @@
+name: ML API CI
+
+on:
+  push:
+    branches: [ "main", "DEV" ]
+  pull_request:
+    branches: [ "main", "DEV" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check imports
+        run: |
+          python -c "import pandas, numpy, sklearn, fastapi, joblib"
+
+      - name: Run tests
+        run: |
+          pytest tests/ 
+
+      - name: Build Docker image
+        run: |
+          docker build -t ecommerce-delay-api .

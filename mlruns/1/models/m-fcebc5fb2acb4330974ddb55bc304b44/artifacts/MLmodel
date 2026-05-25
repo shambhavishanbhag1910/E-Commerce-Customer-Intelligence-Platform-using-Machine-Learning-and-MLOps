@@ -1,0 +1,23 @@
+artifact_path: /workspaces/E-Commerce-Customer-Intelligence-Platform-using-Machine-Learning-and-MLOps/mlruns/1/models/m-fcebc5fb2acb4330974ddb55bc304b44/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-fcebc5fb2acb4330974ddb55bc304b44
+model_size_bytes: 5971
+model_uuid: m-fcebc5fb2acb4330974ddb55bc304b44
+prompts: null
+run_id: 636075e8cb6d4acf95fbb5e619acc366
+utc_time_created: '2026-05-19 10:24:23.658697'

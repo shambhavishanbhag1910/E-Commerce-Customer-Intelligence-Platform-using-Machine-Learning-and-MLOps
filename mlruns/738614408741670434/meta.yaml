@@ -1,0 +1,8 @@
+artifact_location: file:///workspaces/E-Commerce-Customer-Intelligence-Platform-using-Machine-Learning-and-MLOps/mlruns/738614408741670434
+creation_time: 1779185218170
+experiment_id: '738614408741670434'
+last_update_time: 1779185218170
+lifecycle_stage: active
+name: delivery-delay-prediction
+trace_location: null
+workspace: default
